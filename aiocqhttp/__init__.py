@@ -20,7 +20,7 @@ from quart import Quart, request, abort, jsonify, websocket, Response
 
 from .api import AsyncApi, SyncApi
 from .api_impl import (SyncWrapperApi, HttpApi, WebSocketReverseApi,
-                       UnifiedApi, ResultStore)
+                       UnifiedApi, ResultStore, WebSocketForwardApi, _is_websocket_url)
 from .bus import EventBus
 from .exceptions import Error, TimingError
 from .event import Event
@@ -155,12 +155,38 @@ class CQHttp(AsyncApi):
         api_timeout_sec = api_timeout_sec or 60  # wait for 60 secs by default
         self._access_token = access_token
         self._secret = secret
-        self._api._http_api = HttpApi(api_root, access_token, api_timeout_sec)
+
+        # Configure API implementations based on api_root type
+        http_api = None
+        wsf_api = None
+
+        if _is_websocket_url(api_root):
+            # Forward WebSocket mode
+            try:
+                wsf_api = WebSocketForwardApi(
+                    ws_url=api_root,
+                    access_token=access_token,
+                    timeout_sec=api_timeout_sec,
+                    event_handler=self._handle_event
+                )
+            except ImportError as e:
+                self.logger.error(f"Failed to create WebSocketForwardApi: {e}")
+                raise
+        else:
+            # HTTP mode
+            http_api = HttpApi(api_root, access_token, api_timeout_sec)
+
+        # Always configure reverse WebSocket (independent)
         self._wsr_api_clients = {}  # connected wsr api clients
         self._wsr_event_clients = set()
-        self._api._wsr_api = WebSocketReverseApi(self._wsr_api_clients,
-                                                 self._wsr_event_clients,
-                                                 api_timeout_sec)
+        wsr_api = WebSocketReverseApi(self._wsr_api_clients,
+                                      self._wsr_event_clients,
+                                      api_timeout_sec)
+
+        # Update the existing UnifiedApi instance instead of creating a new one
+        self._api._http_api = http_api
+        self._api._wsr_api = wsr_api
+        self._api._wsf_api = wsf_api
 
     async def _before_serving(self):
         self._loop = asyncio.get_running_loop()

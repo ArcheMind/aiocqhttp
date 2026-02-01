@@ -20,7 +20,8 @@ setup(
     },
     install_requires=['Quart>=0.17,<1.0', 'httpx>=0.11,<1.0'],
     extras_require={
-        'all': ['ujson'],
+        'all': ['ujson', 'websockets>=8.0'],
+        'forward-ws': ['websockets>=8.0'],
     },
     python_requires='>=3.7',
     platforms='any',
