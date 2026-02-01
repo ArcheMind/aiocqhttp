@@ -6,7 +6,6 @@ from textwrap import indent
 from dataclasses import dataclass
 from typing import List, Optional, Tuple
 
-
 TypeStr = str
 
 type_mappings = {
@@ -46,7 +45,8 @@ class ApiReturn:
     is_array: bool
 
     @property
-    def _base(self): return f'_{self.action}_ret'
+    def _base(self):
+        return f'_{self.action}_ret'
 
     @property
     def var_name(self):
@@ -78,8 +78,8 @@ class Api:
         if self.params is not None:
             params = 'self, *,\n'
             params += '\n'.join(f'{p.render()},' for p in self.params)
-            arg_docs = '\n'.join(f'{p.name}: {p.description}'
-                                 for p in self.params)
+            arg_docs = '\n'.join(
+                f'{p.name}: {p.description}' for p in self.params)
         if self.ret is not None:
             ret = self.ret.var_name
         return params, arg_docs, ret
@@ -119,8 +119,8 @@ def create_params(param_block: str):
         rows = re.findall(r'^\|([^|]+)\|([^|]+)\|([^|]+)\|([^|]+)\|',
                           param_block, re.MULTILINE)
     else:  # ^| 字段名 | 数据类型 | 说明 |
-        rows = re.findall(r'^\|([^|]+)\|([^|]+)\|([^|]+)\|',
-                          param_block, re.MULTILINE)
+        rows = re.findall(r'^\|([^|]+)\|([^|]+)\|([^|]+)\|', param_block,
+                          re.MULTILINE)
     for row in islice(rows, 2, None):
         name = row[0].split()[0].strip(' `')  # `xxx` 或 `yyy`
         type_ = type_mappings[row[1].strip()]
@@ -155,11 +155,12 @@ def create_ret(action: str, ret_block: str):
     first = True
     ret = None
     # there might be multiple tables
-    for table_block in re.findall(r'\|\s*字段名.+?(?=(?=\n\n)|(?=$))',
-                                  ret_block, re.DOTALL):
+    for table_block in re.findall(r'\|\s*字段名.+?(?=(?=\n\n)|(?=$))', ret_block,
+                                  re.DOTALL):
         fields = []
-        for row in islice(re.findall(r'^\|([^|]+)\|([^|]+)\|([^|]+)\|',
-                                     table_block, re.MULTILINE), 2, None):
+        for row in islice(
+                re.findall(r'^\|([^|]+)\|([^|]+)\|([^|]+)\|', table_block,
+                           re.MULTILINE), 2, None):
             name = row[0].strip(' `')
             if name == '……':
                 name = '#__there_might_be_more_fields_below'
@@ -205,13 +206,13 @@ if len(sys.argv) < 3:
 template_path = path.join(path.dirname(__file__), 'api.pyi.template')
 with open(template_path) as template_in, open(sys.argv[2], 'w') as of:
     apis = create_apis(sys.argv[1])
-    api_returns_38 = '\n\n'.join(api.ret.render_definition_38()
-                                 for api in apis if api.ret is not None)
-    api_returns_37 = '\n'.join(api.ret.render_definition_37()
-                               for api in apis if api.ret is not None)
+    api_returns_38 = '\n\n'.join(
+        api.ret.render_definition_38() for api in apis if api.ret is not None)
+    api_returns_37 = '\n'.join(
+        api.ret.render_definition_37() for api in apis if api.ret is not None)
     api_methods = '\n\n'.join(api.render_definition() for api in apis)
-    api_methods_async = '\n\n'.join(api.render_definition_async()
-                                    for api in apis)
+    api_methods_async = '\n\n'.join(
+        api.render_definition_async() for api in apis)
     api_methods_sync = '\n\n'.join(api.render_definition_sync() for api in apis)
     of.write(template_in.read().format(
         api_returns_38=indent(api_returns_38, ' ' * 4),

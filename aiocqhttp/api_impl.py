@@ -126,8 +126,7 @@ class WebSocketReverseApi(AsyncApi):
     """
 
     def __init__(self, connected_api_clients: Dict[str, Websocket],
-                 connected_event_clients: Set[Websocket],
-                 timeout_sec: float):
+                 connected_event_clients: Set[Websocket], timeout_sec: float):
         super().__init__()
         self._api_clients = connected_api_clients
         self._event_clients = connected_event_clients
@@ -211,7 +210,7 @@ class UnifiedApi(AsyncApi):
 
 
 def _is_websocket_url(url: str) -> bool:
-    """Check if URL is a WebSocket URL."""
+    """判断 ``url`` 是否为 WebSocket URL。"""
     return url and (url.startswith('ws://') or url.startswith('wss://'))
 
 
@@ -226,7 +225,8 @@ class WebSocketForwardApi(AsyncApi):
                  timeout_sec: float, event_handler: Optional[Callable]):
         super().__init__()
         if not websockets:
-            raise ImportError("websockets package is required for forward WebSocket support")
+            raise ImportError(
+                "websockets package is required for forward WebSocket support")
 
         self._ws_url = ws_url
         self._access_token = access_token
@@ -250,13 +250,15 @@ class WebSocketForwardApi(AsyncApi):
                 loop = None
 
         if not loop:
-            self._logger.warning('No event loop available for forward WebSocket auto-connect')
+            self._logger.warning(
+                'No event loop available for forward WebSocket auto-connect')
             return
 
         try:
             self._auto_connect_task = loop.create_task(self._auto_connect())
         except Exception as e:
-            self._logger.error(f'Failed to schedule forward WebSocket auto-connect: {e}')
+            self._logger.error(
+                f'Failed to schedule forward WebSocket auto-connect: {e}')
 
     async def _auto_connect(self) -> None:
         try:
@@ -273,11 +275,7 @@ class WebSocketForwardApi(AsyncApi):
         future = asyncio.get_event_loop().create_future()
         self._response_futures[echo] = future
 
-        request = {
-            'action': action,
-            'params': params,
-            'echo': echo
-        }
+        request = {'action': action, 'params': params, 'echo': echo}
 
         try:
             await self._connection.send(json.dumps(request, ensure_ascii=False))
@@ -316,25 +314,24 @@ class WebSocketForwardApi(AsyncApi):
                 self._connection = await websockets.connect(
                     self._ws_url,
                     additional_headers=headers,
-                    open_timeout=self._timeout_sec
-                )
+                    open_timeout=self._timeout_sec)
             except Exception as e:
-                if "additional_headers" not in str(e) and "open_timeout" not in str(e):
+                if "additional_headers" not in str(
+                        e) and "open_timeout" not in str(e):
                     raise
                 try:
                     self._connection = await websockets.connect(
                         self._ws_url,
                         headers=headers,
-                        open_timeout=self._timeout_sec
-                    )
+                        open_timeout=self._timeout_sec)
                 except Exception as e2:
-                    if "headers" not in str(e2) and "open_timeout" not in str(e2):
+                    if "headers" not in str(e2) and "open_timeout" not in str(
+                            e2):
                         raise
                     self._connection = await websockets.connect(
                         self._ws_url,
                         extra_headers=headers,
-                        timeout=self._timeout_sec
-                    )
+                        timeout=self._timeout_sec)
             self._running = True
             asyncio.create_task(self._message_loop())
             self._logger.info(f'Forward WebSocket connected to {self._ws_url}')
@@ -351,7 +348,8 @@ class WebSocketForwardApi(AsyncApi):
                         data = json.loads(message)
                         await self._handle_message(data)
                     except json.JSONDecodeError:
-                        self._logger.warning(f'Received invalid JSON: {message}')
+                        self._logger.warning(
+                            f'Received invalid JSON: {message}')
                 except websockets.exceptions.ConnectionClosed:
                     self._logger.info('Forward WebSocket connection closed')
                     break
@@ -369,11 +367,13 @@ class WebSocketForwardApi(AsyncApi):
                 future.set_result(data)
         # OneBot events have 'post_type' field
         elif 'post_type' in data and self._event_handler:
+
             async def _run_handler():
                 try:
                     await self._event_handler(data)
                 except Exception as e:
                     self._logger.error(f'Error handling event: {e}')
+
             asyncio.create_task(_run_handler())
 
     async def close(self):
@@ -388,7 +388,8 @@ class SyncWrapperApi(SyncApi):
     封装 `AsyncApi` 对象，使其可同步地调用。
     """
 
-    def __init__(self, async_api: AsyncApi,
+    def __init__(self,
+                 async_api: AsyncApi,
                  loop: Optional[asyncio.AbstractEventLoop] = None):
         """
         `async_api` 参数为 `AsyncApi` 对象，`loop` 参数为用来执行 API

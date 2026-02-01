@@ -20,7 +20,13 @@ pip install aiocqhttp
 pip install aiocqhttp[all]
 ```
 
-这将会额外安装 `ujson`。
+这将会额外安装 `ujson` 和正向 WebSocket 所需的 `websockets`。
+
+如果只需要正向 WebSocket 支持，可使用：
+
+```bash
+pip install aiocqhttp[forward-ws]
+```
 
 ## 最小实例
 
@@ -75,6 +81,24 @@ Running on http://127.0.0.1:8080 (CTRL + C to quit)
 接着设置 `use_ws_reverse` 为 `true`。
 
 最后重启 CQHTTP。
+
+### 使用正向 WebSocket
+
+修改 `bot.py` 中创建 `bot` 对象部分的代码为：
+
+```python
+bot = CQHttp(api_root='ws://127.0.0.1:6700/')
+```
+
+这里 `127.0.0.1:6700` 应根据情况改为 OneBot 监听的 WebSocket 地址和端口。
+
+如果 OneBot 配置中启用了鉴权，还需要传入 `access_token`：
+
+```python
+bot = CQHttp(api_root='ws://127.0.0.1:6700/', access_token='your_token')
+```
+
+然后在 OneBot 配置中启用正向 WebSocket 并确保监听地址可访问，最后重启 OneBot。
 
 ### 使用 HTTP
 

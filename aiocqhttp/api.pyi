@@ -3,9 +3,9 @@ from typing import Union, Awaitable, Any, Callable, Optional, Dict, List
 
 from aiocqhttp.typing import Message_T
 
-
 if sys.version_info >= (3, 8, 0):
     from typing import TypedDict
+
     class _send_private_msg_ret(TypedDict):
         message_id: int
 
@@ -149,23 +149,27 @@ else:
 
 
 class Api:
+
     def call_action(
-            self,
-            action: str,
-            **params,
-    ) -> Union[Awaitable[Any], Any]: ...
+        self,
+        action: str,
+        **params,
+    ) -> Union[Awaitable[Any], Any]:
+        ...
 
     def __getattr__(
-            self,
-            item: str,
-    ) -> Callable[..., Union[Awaitable[Any], Any]]: ...
+        self,
+        item: str,
+    ) -> Callable[..., Union[Awaitable[Any], Any]]:
+        ...
 
     def send_private_msg(
-            self, *,
-            user_id: int,
-            message: Message_T,
-            auto_escape: bool = False,
-            self_id: Optional[int] = None,
+        self,
+        *,
+        user_id: int,
+        message: Message_T,
+        auto_escape: bool = False,
+        self_id: Optional[int] = None,
     ) -> Union[Awaitable[_send_private_msg_ret], _send_private_msg_ret]:
         """
         发送私聊消息。
@@ -178,11 +182,12 @@ class Api:
         """
 
     def send_group_msg(
-            self, *,
-            group_id: int,
-            message: Message_T,
-            auto_escape: bool = False,
-            self_id: Optional[int] = None,
+        self,
+        *,
+        group_id: int,
+        message: Message_T,
+        auto_escape: bool = False,
+        self_id: Optional[int] = None,
     ) -> Union[Awaitable[_send_group_msg_ret], _send_group_msg_ret]:
         """
         发送群消息。
@@ -195,13 +200,14 @@ class Api:
         """
 
     def send_msg(
-            self, *,
-            message_type: Optional[str] = None,
-            user_id: Optional[int] = None,
-            group_id: Optional[int] = None,
-            message: Message_T,
-            auto_escape: bool = False,
-            self_id: Optional[int] = None,
+        self,
+        *,
+        message_type: Optional[str] = None,
+        user_id: Optional[int] = None,
+        group_id: Optional[int] = None,
+        message: Message_T,
+        auto_escape: bool = False,
+        self_id: Optional[int] = None,
     ) -> Union[Awaitable[_send_msg_ret], _send_msg_ret]:
         """
         发送消息。
@@ -216,9 +222,10 @@ class Api:
         """
 
     def delete_msg(
-            self, *,
-            message_id: int,
-            self_id: Optional[int] = None,
+        self,
+        *,
+        message_id: int,
+        self_id: Optional[int] = None,
     ) -> Union[Awaitable[None], None]:
         """
         撤回消息。
@@ -229,9 +236,10 @@ class Api:
         """
 
     def get_msg(
-            self, *,
-            message_id: int,
-            self_id: Optional[int] = None,
+        self,
+        *,
+        message_id: int,
+        self_id: Optional[int] = None,
     ) -> Union[Awaitable[_get_msg_ret], _get_msg_ret]:
         """
         获取消息。
@@ -242,9 +250,10 @@ class Api:
         """
 
     def get_forward_msg(
-            self, *,
-            id: str,
-            self_id: Optional[int] = None,
+        self,
+        *,
+        id: str,
+        self_id: Optional[int] = None,
     ) -> Union[Awaitable[_get_forward_msg_ret], _get_forward_msg_ret]:
         """
         获取合并转发消息。
@@ -255,10 +264,11 @@ class Api:
         """
 
     def send_like(
-            self, *,
-            user_id: int,
-            times: int = 1,
-            self_id: Optional[int] = None,
+        self,
+        *,
+        user_id: int,
+        times: int = 1,
+        self_id: Optional[int] = None,
     ) -> Union[Awaitable[None], None]:
         """
         发送好友赞。
@@ -270,11 +280,12 @@ class Api:
         """
 
     def set_group_kick(
-            self, *,
-            group_id: int,
-            user_id: int,
-            reject_add_request: bool = False,
-            self_id: Optional[int] = None,
+        self,
+        *,
+        group_id: int,
+        user_id: int,
+        reject_add_request: bool = False,
+        self_id: Optional[int] = None,
     ) -> Union[Awaitable[None], None]:
         """
         群组踢人。
@@ -287,11 +298,12 @@ class Api:
         """
 
     def set_group_ban(
-            self, *,
-            group_id: int,
-            user_id: int,
-            duration: int = 30 * 60,
-            self_id: Optional[int] = None,
+        self,
+        *,
+        group_id: int,
+        user_id: int,
+        duration: int = 30 * 60,
+        self_id: Optional[int] = None,
     ) -> Union[Awaitable[None], None]:
         """
         群组单人禁言。
@@ -304,12 +316,13 @@ class Api:
         """
 
     def set_group_anonymous_ban(
-            self, *,
-            group_id: int,
-            anonymous: Optional[Dict[str, Any]] = None,
-            anonymous_flag: Optional[str] = None,
-            duration: int = 30 * 60,
-            self_id: Optional[int] = None,
+        self,
+        *,
+        group_id: int,
+        anonymous: Optional[Dict[str, Any]] = None,
+        anonymous_flag: Optional[str] = None,
+        duration: int = 30 * 60,
+        self_id: Optional[int] = None,
     ) -> Union[Awaitable[None], None]:
         """
         群组匿名用户禁言。
@@ -323,10 +336,11 @@ class Api:
         """
 
     def set_group_whole_ban(
-            self, *,
-            group_id: int,
-            enable: bool = True,
-            self_id: Optional[int] = None,
+        self,
+        *,
+        group_id: int,
+        enable: bool = True,
+        self_id: Optional[int] = None,
     ) -> Union[Awaitable[None], None]:
         """
         群组全员禁言。
@@ -338,11 +352,12 @@ class Api:
         """
 
     def set_group_admin(
-            self, *,
-            group_id: int,
-            user_id: int,
-            enable: bool = True,
-            self_id: Optional[int] = None,
+        self,
+        *,
+        group_id: int,
+        user_id: int,
+        enable: bool = True,
+        self_id: Optional[int] = None,
     ) -> Union[Awaitable[None], None]:
         """
         群组设置管理员。
@@ -355,10 +370,11 @@ class Api:
         """
 
     def set_group_anonymous(
-            self, *,
-            group_id: int,
-            enable: bool = True,
-            self_id: Optional[int] = None,
+        self,
+        *,
+        group_id: int,
+        enable: bool = True,
+        self_id: Optional[int] = None,
     ) -> Union[Awaitable[None], None]:
         """
         群组匿名。
@@ -370,11 +386,12 @@ class Api:
         """
 
     def set_group_card(
-            self, *,
-            group_id: int,
-            user_id: int,
-            card: str = '',
-            self_id: Optional[int] = None,
+        self,
+        *,
+        group_id: int,
+        user_id: int,
+        card: str = '',
+        self_id: Optional[int] = None,
     ) -> Union[Awaitable[None], None]:
         """
         设置群名片（群备注）。
@@ -387,10 +404,11 @@ class Api:
         """
 
     def set_group_name(
-            self, *,
-            group_id: int,
-            group_name: str,
-            self_id: Optional[int] = None,
+        self,
+        *,
+        group_id: int,
+        group_name: str,
+        self_id: Optional[int] = None,
     ) -> Union[Awaitable[None], None]:
         """
         设置群名。
@@ -402,10 +420,11 @@ class Api:
         """
 
     def set_group_leave(
-            self, *,
-            group_id: int,
-            is_dismiss: bool = False,
-            self_id: Optional[int] = None,
+        self,
+        *,
+        group_id: int,
+        is_dismiss: bool = False,
+        self_id: Optional[int] = None,
     ) -> Union[Awaitable[None], None]:
         """
         退出群组。
@@ -417,12 +436,13 @@ class Api:
         """
 
     def set_group_special_title(
-            self, *,
-            group_id: int,
-            user_id: int,
-            special_title: str = '',
-            duration: int = -1,
-            self_id: Optional[int] = None,
+        self,
+        *,
+        group_id: int,
+        user_id: int,
+        special_title: str = '',
+        duration: int = -1,
+        self_id: Optional[int] = None,
     ) -> Union[Awaitable[None], None]:
         """
         设置群组专属头衔。
@@ -436,11 +456,12 @@ class Api:
         """
 
     def set_friend_add_request(
-            self, *,
-            flag: str,
-            approve: bool = True,
-            remark: str = '',
-            self_id: Optional[int] = None,
+        self,
+        *,
+        flag: str,
+        approve: bool = True,
+        remark: str = '',
+        self_id: Optional[int] = None,
     ) -> Union[Awaitable[None], None]:
         """
         处理加好友请求。
@@ -453,12 +474,13 @@ class Api:
         """
 
     def set_group_add_request(
-            self, *,
-            flag: str,
-            sub_type: str,
-            approve: bool = True,
-            reason: str = '',
-            self_id: Optional[int] = None,
+        self,
+        *,
+        flag: str,
+        sub_type: str,
+        approve: bool = True,
+        reason: str = '',
+        self_id: Optional[int] = None,
     ) -> Union[Awaitable[None], None]:
         """
         处理加群请求／邀请。
@@ -472,8 +494,9 @@ class Api:
         """
 
     def get_login_info(
-            self, *,
-            self_id: Optional[int] = None,
+        self,
+        *,
+        self_id: Optional[int] = None,
     ) -> Union[Awaitable[_get_login_info_ret], _get_login_info_ret]:
         """
         获取登录号信息。
@@ -483,10 +506,11 @@ class Api:
         """
 
     def get_stranger_info(
-            self, *,
-            user_id: int,
-            no_cache: bool = False,
-            self_id: Optional[int] = None,
+        self,
+        *,
+        user_id: int,
+        no_cache: bool = False,
+        self_id: Optional[int] = None,
     ) -> Union[Awaitable[_get_stranger_info_ret], _get_stranger_info_ret]:
         """
         获取陌生人信息。
@@ -498,9 +522,11 @@ class Api:
         """
 
     def get_friend_list(
-            self, *,
-            self_id: Optional[int] = None,
-    ) -> Union[Awaitable[List[_get_friend_list_ret]], List[_get_friend_list_ret]]:
+        self,
+        *,
+        self_id: Optional[int] = None,
+    ) -> Union[Awaitable[List[_get_friend_list_ret]],
+               List[_get_friend_list_ret]]:
         """
         获取好友列表。
 
@@ -509,10 +535,11 @@ class Api:
         """
 
     def get_group_info(
-            self, *,
-            group_id: int,
-            no_cache: bool = False,
-            self_id: Optional[int] = None,
+        self,
+        *,
+        group_id: int,
+        no_cache: bool = False,
+        self_id: Optional[int] = None,
     ) -> Union[Awaitable[_get_group_info_ret], _get_group_info_ret]:
         """
         获取群信息。
@@ -524,8 +551,9 @@ class Api:
         """
 
     def get_group_list(
-            self, *,
-            self_id: Optional[int] = None,
+        self,
+        *,
+        self_id: Optional[int] = None,
     ) -> Union[Awaitable[List[_get_group_list_ret]], List[_get_group_list_ret]]:
         """
         获取群列表。
@@ -535,12 +563,14 @@ class Api:
         """
 
     def get_group_member_info(
-            self, *,
-            group_id: int,
-            user_id: int,
-            no_cache: bool = False,
-            self_id: Optional[int] = None,
-    ) -> Union[Awaitable[_get_group_member_info_ret], _get_group_member_info_ret]:
+        self,
+        *,
+        group_id: int,
+        user_id: int,
+        no_cache: bool = False,
+        self_id: Optional[int] = None,
+    ) -> Union[Awaitable[_get_group_member_info_ret],
+               _get_group_member_info_ret]:
         """
         获取群成员信息。
 
@@ -552,10 +582,12 @@ class Api:
         """
 
     def get_group_member_list(
-            self, *,
-            group_id: int,
-            self_id: Optional[int] = None,
-    ) -> Union[Awaitable[List[_get_group_member_list_ret]], List[_get_group_member_list_ret]]:
+        self,
+        *,
+        group_id: int,
+        self_id: Optional[int] = None,
+    ) -> Union[Awaitable[List[_get_group_member_list_ret]],
+               List[_get_group_member_list_ret]]:
         """
         获取群成员列表。
 
@@ -565,10 +597,11 @@ class Api:
         """
 
     def get_group_honor_info(
-            self, *,
-            group_id: int,
-            type: str,
-            self_id: Optional[int] = None,
+        self,
+        *,
+        group_id: int,
+        type: str,
+        self_id: Optional[int] = None,
     ) -> Union[Awaitable[_get_group_honor_info_ret], _get_group_honor_info_ret]:
         """
         获取群荣誉信息。
@@ -580,9 +613,10 @@ class Api:
         """
 
     def get_cookies(
-            self, *,
-            domain: str = '',
-            self_id: Optional[int] = None,
+        self,
+        *,
+        domain: str = '',
+        self_id: Optional[int] = None,
     ) -> Union[Awaitable[_get_cookies_ret], _get_cookies_ret]:
         """
         获取 Cookies。
@@ -593,8 +627,9 @@ class Api:
         """
 
     def get_csrf_token(
-            self, *,
-            self_id: Optional[int] = None,
+        self,
+        *,
+        self_id: Optional[int] = None,
     ) -> Union[Awaitable[_get_csrf_token_ret], _get_csrf_token_ret]:
         """
         获取 CSRF Token。
@@ -604,9 +639,10 @@ class Api:
         """
 
     def get_credentials(
-            self, *,
-            domain: str = '',
-            self_id: Optional[int] = None,
+        self,
+        *,
+        domain: str = '',
+        self_id: Optional[int] = None,
     ) -> Union[Awaitable[_get_credentials_ret], _get_credentials_ret]:
         """
         获取 QQ 相关接口凭证。
@@ -617,10 +653,11 @@ class Api:
         """
 
     def get_record(
-            self, *,
-            file: str,
-            out_format: str,
-            self_id: Optional[int] = None,
+        self,
+        *,
+        file: str,
+        out_format: str,
+        self_id: Optional[int] = None,
     ) -> Union[Awaitable[_get_record_ret], _get_record_ret]:
         """
         获取语音。
@@ -632,9 +669,10 @@ class Api:
         """
 
     def get_image(
-            self, *,
-            file: str,
-            self_id: Optional[int] = None,
+        self,
+        *,
+        file: str,
+        self_id: Optional[int] = None,
     ) -> Union[Awaitable[_get_image_ret], _get_image_ret]:
         """
         获取图片。
@@ -645,8 +683,9 @@ class Api:
         """
 
     def can_send_image(
-            self, *,
-            self_id: Optional[int] = None,
+        self,
+        *,
+        self_id: Optional[int] = None,
     ) -> Union[Awaitable[_can_send_image_ret], _can_send_image_ret]:
         """
         检查是否可以发送图片。
@@ -656,8 +695,9 @@ class Api:
         """
 
     def can_send_record(
-            self, *,
-            self_id: Optional[int] = None,
+        self,
+        *,
+        self_id: Optional[int] = None,
     ) -> Union[Awaitable[_can_send_record_ret], _can_send_record_ret]:
         """
         检查是否可以发送语音。
@@ -667,8 +707,9 @@ class Api:
         """
 
     def get_status(
-            self, *,
-            self_id: Optional[int] = None,
+        self,
+        *,
+        self_id: Optional[int] = None,
     ) -> Union[Awaitable[_get_status_ret], _get_status_ret]:
         """
         获取运行状态。
@@ -678,8 +719,9 @@ class Api:
         """
 
     def get_version_info(
-            self, *,
-            self_id: Optional[int] = None,
+        self,
+        *,
+        self_id: Optional[int] = None,
     ) -> Union[Awaitable[_get_version_info_ret], _get_version_info_ret]:
         """
         获取版本信息。
@@ -689,9 +731,10 @@ class Api:
         """
 
     def set_restart(
-            self, *,
-            delay: int = 0,
-            self_id: Optional[int] = None,
+        self,
+        *,
+        delay: int = 0,
+        self_id: Optional[int] = None,
     ) -> Union[Awaitable[None], None]:
         """
         重启 OneBot 实现。
@@ -702,8 +745,9 @@ class Api:
         """
 
     def clean_cache(
-            self, *,
-            self_id: Optional[int] = None,
+        self,
+        *,
+        self_id: Optional[int] = None,
     ) -> Union[Awaitable[None], None]:
         """
         清理缓存。
@@ -715,531 +759,687 @@ class Api:
 
 # definition to avoid union return types
 class AsyncApi(Api):
+
     async def call_action(
-            self,
-            action: str,
-            **params,
-    ) -> Any: ...
+        self,
+        action: str,
+        **params,
+    ) -> Any:
+        ...
 
     async def send_private_msg(
-            self, *,
-            user_id: int,
-            message: Message_T,
-            auto_escape: bool = False,
-            self_id: Optional[int] = None,
-    ) -> _send_private_msg_ret: ...
+        self,
+        *,
+        user_id: int,
+        message: Message_T,
+        auto_escape: bool = False,
+        self_id: Optional[int] = None,
+    ) -> _send_private_msg_ret:
+        ...
 
     async def send_group_msg(
-            self, *,
-            group_id: int,
-            message: Message_T,
-            auto_escape: bool = False,
-            self_id: Optional[int] = None,
-    ) -> _send_group_msg_ret: ...
+        self,
+        *,
+        group_id: int,
+        message: Message_T,
+        auto_escape: bool = False,
+        self_id: Optional[int] = None,
+    ) -> _send_group_msg_ret:
+        ...
 
     async def send_msg(
-            self, *,
-            message_type: Optional[str] = None,
-            user_id: Optional[int] = None,
-            group_id: Optional[int] = None,
-            message: Message_T,
-            auto_escape: bool = False,
-            self_id: Optional[int] = None,
-    ) -> _send_msg_ret: ...
+        self,
+        *,
+        message_type: Optional[str] = None,
+        user_id: Optional[int] = None,
+        group_id: Optional[int] = None,
+        message: Message_T,
+        auto_escape: bool = False,
+        self_id: Optional[int] = None,
+    ) -> _send_msg_ret:
+        ...
 
     async def delete_msg(
-            self, *,
-            message_id: int,
-            self_id: Optional[int] = None,
-    ) -> None: ...
+        self,
+        *,
+        message_id: int,
+        self_id: Optional[int] = None,
+    ) -> None:
+        ...
 
     async def get_msg(
-            self, *,
-            message_id: int,
-            self_id: Optional[int] = None,
-    ) -> _get_msg_ret: ...
+        self,
+        *,
+        message_id: int,
+        self_id: Optional[int] = None,
+    ) -> _get_msg_ret:
+        ...
 
     async def get_forward_msg(
-            self, *,
-            id: str,
-            self_id: Optional[int] = None,
-    ) -> _get_forward_msg_ret: ...
+        self,
+        *,
+        id: str,
+        self_id: Optional[int] = None,
+    ) -> _get_forward_msg_ret:
+        ...
 
     async def send_like(
-            self, *,
-            user_id: int,
-            times: int = 1,
-            self_id: Optional[int] = None,
-    ) -> None: ...
+        self,
+        *,
+        user_id: int,
+        times: int = 1,
+        self_id: Optional[int] = None,
+    ) -> None:
+        ...
 
     async def set_group_kick(
-            self, *,
-            group_id: int,
-            user_id: int,
-            reject_add_request: bool = False,
-            self_id: Optional[int] = None,
-    ) -> None: ...
+        self,
+        *,
+        group_id: int,
+        user_id: int,
+        reject_add_request: bool = False,
+        self_id: Optional[int] = None,
+    ) -> None:
+        ...
 
     async def set_group_ban(
-            self, *,
-            group_id: int,
-            user_id: int,
-            duration: int = 30 * 60,
-            self_id: Optional[int] = None,
-    ) -> None: ...
+        self,
+        *,
+        group_id: int,
+        user_id: int,
+        duration: int = 30 * 60,
+        self_id: Optional[int] = None,
+    ) -> None:
+        ...
 
     async def set_group_anonymous_ban(
-            self, *,
-            group_id: int,
-            anonymous: Optional[Dict[str, Any]] = None,
-            anonymous_flag: Optional[str] = None,
-            duration: int = 30 * 60,
-            self_id: Optional[int] = None,
-    ) -> None: ...
+        self,
+        *,
+        group_id: int,
+        anonymous: Optional[Dict[str, Any]] = None,
+        anonymous_flag: Optional[str] = None,
+        duration: int = 30 * 60,
+        self_id: Optional[int] = None,
+    ) -> None:
+        ...
 
     async def set_group_whole_ban(
-            self, *,
-            group_id: int,
-            enable: bool = True,
-            self_id: Optional[int] = None,
-    ) -> None: ...
+        self,
+        *,
+        group_id: int,
+        enable: bool = True,
+        self_id: Optional[int] = None,
+    ) -> None:
+        ...
 
     async def set_group_admin(
-            self, *,
-            group_id: int,
-            user_id: int,
-            enable: bool = True,
-            self_id: Optional[int] = None,
-    ) -> None: ...
+        self,
+        *,
+        group_id: int,
+        user_id: int,
+        enable: bool = True,
+        self_id: Optional[int] = None,
+    ) -> None:
+        ...
 
     async def set_group_anonymous(
-            self, *,
-            group_id: int,
-            enable: bool = True,
-            self_id: Optional[int] = None,
-    ) -> None: ...
+        self,
+        *,
+        group_id: int,
+        enable: bool = True,
+        self_id: Optional[int] = None,
+    ) -> None:
+        ...
 
     async def set_group_card(
-            self, *,
-            group_id: int,
-            user_id: int,
-            card: str = '',
-            self_id: Optional[int] = None,
-    ) -> None: ...
+        self,
+        *,
+        group_id: int,
+        user_id: int,
+        card: str = '',
+        self_id: Optional[int] = None,
+    ) -> None:
+        ...
 
     async def set_group_name(
-            self, *,
-            group_id: int,
-            group_name: str,
-            self_id: Optional[int] = None,
-    ) -> None: ...
+        self,
+        *,
+        group_id: int,
+        group_name: str,
+        self_id: Optional[int] = None,
+    ) -> None:
+        ...
 
     async def set_group_leave(
-            self, *,
-            group_id: int,
-            is_dismiss: bool = False,
-            self_id: Optional[int] = None,
-    ) -> None: ...
+        self,
+        *,
+        group_id: int,
+        is_dismiss: bool = False,
+        self_id: Optional[int] = None,
+    ) -> None:
+        ...
 
     async def set_group_special_title(
-            self, *,
-            group_id: int,
-            user_id: int,
-            special_title: str = '',
-            duration: int = -1,
-            self_id: Optional[int] = None,
-    ) -> None: ...
+        self,
+        *,
+        group_id: int,
+        user_id: int,
+        special_title: str = '',
+        duration: int = -1,
+        self_id: Optional[int] = None,
+    ) -> None:
+        ...
 
     async def set_friend_add_request(
-            self, *,
-            flag: str,
-            approve: bool = True,
-            remark: str = '',
-            self_id: Optional[int] = None,
-    ) -> None: ...
+        self,
+        *,
+        flag: str,
+        approve: bool = True,
+        remark: str = '',
+        self_id: Optional[int] = None,
+    ) -> None:
+        ...
 
     async def set_group_add_request(
-            self, *,
-            flag: str,
-            sub_type: str,
-            approve: bool = True,
-            reason: str = '',
-            self_id: Optional[int] = None,
-    ) -> None: ...
+        self,
+        *,
+        flag: str,
+        sub_type: str,
+        approve: bool = True,
+        reason: str = '',
+        self_id: Optional[int] = None,
+    ) -> None:
+        ...
 
     async def get_login_info(
-            self, *,
-            self_id: Optional[int] = None,
-    ) -> _get_login_info_ret: ...
+        self,
+        *,
+        self_id: Optional[int] = None,
+    ) -> _get_login_info_ret:
+        ...
 
     async def get_stranger_info(
-            self, *,
-            user_id: int,
-            no_cache: bool = False,
-            self_id: Optional[int] = None,
-    ) -> _get_stranger_info_ret: ...
+        self,
+        *,
+        user_id: int,
+        no_cache: bool = False,
+        self_id: Optional[int] = None,
+    ) -> _get_stranger_info_ret:
+        ...
 
     async def get_friend_list(
-            self, *,
-            self_id: Optional[int] = None,
-    ) -> List[_get_friend_list_ret]: ...
+        self,
+        *,
+        self_id: Optional[int] = None,
+    ) -> List[_get_friend_list_ret]:
+        ...
 
     async def get_group_info(
-            self, *,
-            group_id: int,
-            no_cache: bool = False,
-            self_id: Optional[int] = None,
-    ) -> _get_group_info_ret: ...
+        self,
+        *,
+        group_id: int,
+        no_cache: bool = False,
+        self_id: Optional[int] = None,
+    ) -> _get_group_info_ret:
+        ...
 
     async def get_group_list(
-            self, *,
-            self_id: Optional[int] = None,
-    ) -> List[_get_group_list_ret]: ...
+        self,
+        *,
+        self_id: Optional[int] = None,
+    ) -> List[_get_group_list_ret]:
+        ...
 
     async def get_group_member_info(
-            self, *,
-            group_id: int,
-            user_id: int,
-            no_cache: bool = False,
-            self_id: Optional[int] = None,
-    ) -> _get_group_member_info_ret: ...
+        self,
+        *,
+        group_id: int,
+        user_id: int,
+        no_cache: bool = False,
+        self_id: Optional[int] = None,
+    ) -> _get_group_member_info_ret:
+        ...
 
     async def get_group_member_list(
-            self, *,
-            group_id: int,
-            self_id: Optional[int] = None,
-    ) -> List[_get_group_member_list_ret]: ...
+        self,
+        *,
+        group_id: int,
+        self_id: Optional[int] = None,
+    ) -> List[_get_group_member_list_ret]:
+        ...
 
     async def get_group_honor_info(
-            self, *,
-            group_id: int,
-            type: str,
-            self_id: Optional[int] = None,
-    ) -> _get_group_honor_info_ret: ...
+        self,
+        *,
+        group_id: int,
+        type: str,
+        self_id: Optional[int] = None,
+    ) -> _get_group_honor_info_ret:
+        ...
 
     async def get_cookies(
-            self, *,
-            domain: str = '',
-            self_id: Optional[int] = None,
-    ) -> _get_cookies_ret: ...
+        self,
+        *,
+        domain: str = '',
+        self_id: Optional[int] = None,
+    ) -> _get_cookies_ret:
+        ...
 
     async def get_csrf_token(
-            self, *,
-            self_id: Optional[int] = None,
-    ) -> _get_csrf_token_ret: ...
+        self,
+        *,
+        self_id: Optional[int] = None,
+    ) -> _get_csrf_token_ret:
+        ...
 
     async def get_credentials(
-            self, *,
-            domain: str = '',
-            self_id: Optional[int] = None,
-    ) -> _get_credentials_ret: ...
+        self,
+        *,
+        domain: str = '',
+        self_id: Optional[int] = None,
+    ) -> _get_credentials_ret:
+        ...
 
     async def get_record(
-            self, *,
-            file: str,
-            out_format: str,
-            self_id: Optional[int] = None,
-    ) -> _get_record_ret: ...
+        self,
+        *,
+        file: str,
+        out_format: str,
+        self_id: Optional[int] = None,
+    ) -> _get_record_ret:
+        ...
 
     async def get_image(
-            self, *,
-            file: str,
-            self_id: Optional[int] = None,
-    ) -> _get_image_ret: ...
+        self,
+        *,
+        file: str,
+        self_id: Optional[int] = None,
+    ) -> _get_image_ret:
+        ...
 
     async def can_send_image(
-            self, *,
-            self_id: Optional[int] = None,
-    ) -> _can_send_image_ret: ...
+        self,
+        *,
+        self_id: Optional[int] = None,
+    ) -> _can_send_image_ret:
+        ...
 
     async def can_send_record(
-            self, *,
-            self_id: Optional[int] = None,
-    ) -> _can_send_record_ret: ...
+        self,
+        *,
+        self_id: Optional[int] = None,
+    ) -> _can_send_record_ret:
+        ...
 
     async def get_status(
-            self, *,
-            self_id: Optional[int] = None,
-    ) -> _get_status_ret: ...
+        self,
+        *,
+        self_id: Optional[int] = None,
+    ) -> _get_status_ret:
+        ...
 
     async def get_version_info(
-            self, *,
-            self_id: Optional[int] = None,
-    ) -> _get_version_info_ret: ...
+        self,
+        *,
+        self_id: Optional[int] = None,
+    ) -> _get_version_info_ret:
+        ...
 
     async def set_restart(
-            self, *,
-            delay: int = 0,
-            self_id: Optional[int] = None,
-    ) -> None: ...
+        self,
+        *,
+        delay: int = 0,
+        self_id: Optional[int] = None,
+    ) -> None:
+        ...
 
     async def clean_cache(
-            self, *,
-            self_id: Optional[int] = None,
-    ) -> None: ...
+        self,
+        *,
+        self_id: Optional[int] = None,
+    ) -> None:
+        ...
 
 
 # definition to avoid union return types
 class SyncApi(Api):
+
     def call_action(
-            self,
-            action: str,
-            **params,
-    ) -> Any: ...
+        self,
+        action: str,
+        **params,
+    ) -> Any:
+        ...
 
     def send_private_msg(
-            self, *,
-            user_id: int,
-            message: Message_T,
-            auto_escape: bool = False,
-            self_id: Optional[int] = None,
-    ) -> _send_private_msg_ret: ...
+        self,
+        *,
+        user_id: int,
+        message: Message_T,
+        auto_escape: bool = False,
+        self_id: Optional[int] = None,
+    ) -> _send_private_msg_ret:
+        ...
 
     def send_group_msg(
-            self, *,
-            group_id: int,
-            message: Message_T,
-            auto_escape: bool = False,
-            self_id: Optional[int] = None,
-    ) -> _send_group_msg_ret: ...
+        self,
+        *,
+        group_id: int,
+        message: Message_T,
+        auto_escape: bool = False,
+        self_id: Optional[int] = None,
+    ) -> _send_group_msg_ret:
+        ...
 
     def send_msg(
-            self, *,
-            message_type: Optional[str] = None,
-            user_id: Optional[int] = None,
-            group_id: Optional[int] = None,
-            message: Message_T,
-            auto_escape: bool = False,
-            self_id: Optional[int] = None,
-    ) -> _send_msg_ret: ...
+        self,
+        *,
+        message_type: Optional[str] = None,
+        user_id: Optional[int] = None,
+        group_id: Optional[int] = None,
+        message: Message_T,
+        auto_escape: bool = False,
+        self_id: Optional[int] = None,
+    ) -> _send_msg_ret:
+        ...
 
     def delete_msg(
-            self, *,
-            message_id: int,
-            self_id: Optional[int] = None,
-    ) -> None: ...
+        self,
+        *,
+        message_id: int,
+        self_id: Optional[int] = None,
+    ) -> None:
+        ...
 
     def get_msg(
-            self, *,
-            message_id: int,
-            self_id: Optional[int] = None,
-    ) -> _get_msg_ret: ...
+        self,
+        *,
+        message_id: int,
+        self_id: Optional[int] = None,
+    ) -> _get_msg_ret:
+        ...
 
     def get_forward_msg(
-            self, *,
-            id: str,
-            self_id: Optional[int] = None,
-    ) -> _get_forward_msg_ret: ...
+        self,
+        *,
+        id: str,
+        self_id: Optional[int] = None,
+    ) -> _get_forward_msg_ret:
+        ...
 
     def send_like(
-            self, *,
-            user_id: int,
-            times: int = 1,
-            self_id: Optional[int] = None,
-    ) -> None: ...
+        self,
+        *,
+        user_id: int,
+        times: int = 1,
+        self_id: Optional[int] = None,
+    ) -> None:
+        ...
 
     def set_group_kick(
-            self, *,
-            group_id: int,
-            user_id: int,
-            reject_add_request: bool = False,
-            self_id: Optional[int] = None,
-    ) -> None: ...
+        self,
+        *,
+        group_id: int,
+        user_id: int,
+        reject_add_request: bool = False,
+        self_id: Optional[int] = None,
+    ) -> None:
+        ...
 
     def set_group_ban(
-            self, *,
-            group_id: int,
-            user_id: int,
-            duration: int = 30 * 60,
-            self_id: Optional[int] = None,
-    ) -> None: ...
+        self,
+        *,
+        group_id: int,
+        user_id: int,
+        duration: int = 30 * 60,
+        self_id: Optional[int] = None,
+    ) -> None:
+        ...
 
     def set_group_anonymous_ban(
-            self, *,
-            group_id: int,
-            anonymous: Optional[Dict[str, Any]] = None,
-            anonymous_flag: Optional[str] = None,
-            duration: int = 30 * 60,
-            self_id: Optional[int] = None,
-    ) -> None: ...
+        self,
+        *,
+        group_id: int,
+        anonymous: Optional[Dict[str, Any]] = None,
+        anonymous_flag: Optional[str] = None,
+        duration: int = 30 * 60,
+        self_id: Optional[int] = None,
+    ) -> None:
+        ...
 
     def set_group_whole_ban(
-            self, *,
-            group_id: int,
-            enable: bool = True,
-            self_id: Optional[int] = None,
-    ) -> None: ...
+        self,
+        *,
+        group_id: int,
+        enable: bool = True,
+        self_id: Optional[int] = None,
+    ) -> None:
+        ...
 
     def set_group_admin(
-            self, *,
-            group_id: int,
-            user_id: int,
-            enable: bool = True,
-            self_id: Optional[int] = None,
-    ) -> None: ...
+        self,
+        *,
+        group_id: int,
+        user_id: int,
+        enable: bool = True,
+        self_id: Optional[int] = None,
+    ) -> None:
+        ...
 
     def set_group_anonymous(
-            self, *,
-            group_id: int,
-            enable: bool = True,
-            self_id: Optional[int] = None,
-    ) -> None: ...
+        self,
+        *,
+        group_id: int,
+        enable: bool = True,
+        self_id: Optional[int] = None,
+    ) -> None:
+        ...
 
     def set_group_card(
-            self, *,
-            group_id: int,
-            user_id: int,
-            card: str = '',
-            self_id: Optional[int] = None,
-    ) -> None: ...
+        self,
+        *,
+        group_id: int,
+        user_id: int,
+        card: str = '',
+        self_id: Optional[int] = None,
+    ) -> None:
+        ...
 
     def set_group_name(
-            self, *,
-            group_id: int,
-            group_name: str,
-            self_id: Optional[int] = None,
-    ) -> None: ...
+        self,
+        *,
+        group_id: int,
+        group_name: str,
+        self_id: Optional[int] = None,
+    ) -> None:
+        ...
 
     def set_group_leave(
-            self, *,
-            group_id: int,
-            is_dismiss: bool = False,
-            self_id: Optional[int] = None,
-    ) -> None: ...
+        self,
+        *,
+        group_id: int,
+        is_dismiss: bool = False,
+        self_id: Optional[int] = None,
+    ) -> None:
+        ...
 
     def set_group_special_title(
-            self, *,
-            group_id: int,
-            user_id: int,
-            special_title: str = '',
-            duration: int = -1,
-            self_id: Optional[int] = None,
-    ) -> None: ...
+        self,
+        *,
+        group_id: int,
+        user_id: int,
+        special_title: str = '',
+        duration: int = -1,
+        self_id: Optional[int] = None,
+    ) -> None:
+        ...
 
     def set_friend_add_request(
-            self, *,
-            flag: str,
-            approve: bool = True,
-            remark: str = '',
-            self_id: Optional[int] = None,
-    ) -> None: ...
+        self,
+        *,
+        flag: str,
+        approve: bool = True,
+        remark: str = '',
+        self_id: Optional[int] = None,
+    ) -> None:
+        ...
 
     def set_group_add_request(
-            self, *,
-            flag: str,
-            sub_type: str,
-            approve: bool = True,
-            reason: str = '',
-            self_id: Optional[int] = None,
-    ) -> None: ...
+        self,
+        *,
+        flag: str,
+        sub_type: str,
+        approve: bool = True,
+        reason: str = '',
+        self_id: Optional[int] = None,
+    ) -> None:
+        ...
 
     def get_login_info(
-            self, *,
-            self_id: Optional[int] = None,
-    ) -> _get_login_info_ret: ...
+        self,
+        *,
+        self_id: Optional[int] = None,
+    ) -> _get_login_info_ret:
+        ...
 
     def get_stranger_info(
-            self, *,
-            user_id: int,
-            no_cache: bool = False,
-            self_id: Optional[int] = None,
-    ) -> _get_stranger_info_ret: ...
+        self,
+        *,
+        user_id: int,
+        no_cache: bool = False,
+        self_id: Optional[int] = None,
+    ) -> _get_stranger_info_ret:
+        ...
 
     def get_friend_list(
-            self, *,
-            self_id: Optional[int] = None,
-    ) -> List[_get_friend_list_ret]: ...
+        self,
+        *,
+        self_id: Optional[int] = None,
+    ) -> List[_get_friend_list_ret]:
+        ...
 
     def get_group_info(
-            self, *,
-            group_id: int,
-            no_cache: bool = False,
-            self_id: Optional[int] = None,
-    ) -> _get_group_info_ret: ...
+        self,
+        *,
+        group_id: int,
+        no_cache: bool = False,
+        self_id: Optional[int] = None,
+    ) -> _get_group_info_ret:
+        ...
 
     def get_group_list(
-            self, *,
-            self_id: Optional[int] = None,
-    ) -> List[_get_group_list_ret]: ...
+        self,
+        *,
+        self_id: Optional[int] = None,
+    ) -> List[_get_group_list_ret]:
+        ...
 
     def get_group_member_info(
-            self, *,
-            group_id: int,
-            user_id: int,
-            no_cache: bool = False,
-            self_id: Optional[int] = None,
-    ) -> _get_group_member_info_ret: ...
+        self,
+        *,
+        group_id: int,
+        user_id: int,
+        no_cache: bool = False,
+        self_id: Optional[int] = None,
+    ) -> _get_group_member_info_ret:
+        ...
 
     def get_group_member_list(
-            self, *,
-            group_id: int,
-            self_id: Optional[int] = None,
-    ) -> List[_get_group_member_list_ret]: ...
+        self,
+        *,
+        group_id: int,
+        self_id: Optional[int] = None,
+    ) -> List[_get_group_member_list_ret]:
+        ...
 
     def get_group_honor_info(
-            self, *,
-            group_id: int,
-            type: str,
-            self_id: Optional[int] = None,
-    ) -> _get_group_honor_info_ret: ...
+        self,
+        *,
+        group_id: int,
+        type: str,
+        self_id: Optional[int] = None,
+    ) -> _get_group_honor_info_ret:
+        ...
 
     def get_cookies(
-            self, *,
-            domain: str = '',
-            self_id: Optional[int] = None,
-    ) -> _get_cookies_ret: ...
+        self,
+        *,
+        domain: str = '',
+        self_id: Optional[int] = None,
+    ) -> _get_cookies_ret:
+        ...
 
     def get_csrf_token(
-            self, *,
-            self_id: Optional[int] = None,
-    ) -> _get_csrf_token_ret: ...
+        self,
+        *,
+        self_id: Optional[int] = None,
+    ) -> _get_csrf_token_ret:
+        ...
 
     def get_credentials(
-            self, *,
-            domain: str = '',
-            self_id: Optional[int] = None,
-    ) -> _get_credentials_ret: ...
+        self,
+        *,
+        domain: str = '',
+        self_id: Optional[int] = None,
+    ) -> _get_credentials_ret:
+        ...
 
     def get_record(
-            self, *,
-            file: str,
-            out_format: str,
-            self_id: Optional[int] = None,
-    ) -> _get_record_ret: ...
+        self,
+        *,
+        file: str,
+        out_format: str,
+        self_id: Optional[int] = None,
+    ) -> _get_record_ret:
+        ...
 
     def get_image(
-            self, *,
-            file: str,
-            self_id: Optional[int] = None,
-    ) -> _get_image_ret: ...
+        self,
+        *,
+        file: str,
+        self_id: Optional[int] = None,
+    ) -> _get_image_ret:
+        ...
 
     def can_send_image(
-            self, *,
-            self_id: Optional[int] = None,
-    ) -> _can_send_image_ret: ...
+        self,
+        *,
+        self_id: Optional[int] = None,
+    ) -> _can_send_image_ret:
+        ...
 
     def can_send_record(
-            self, *,
-            self_id: Optional[int] = None,
-    ) -> _can_send_record_ret: ...
+        self,
+        *,
+        self_id: Optional[int] = None,
+    ) -> _can_send_record_ret:
+        ...
 
     def get_status(
-            self, *,
-            self_id: Optional[int] = None,
-    ) -> _get_status_ret: ...
+        self,
+        *,
+        self_id: Optional[int] = None,
+    ) -> _get_status_ret:
+        ...
 
     def get_version_info(
-            self, *,
-            self_id: Optional[int] = None,
-    ) -> _get_version_info_ret: ...
+        self,
+        *,
+        self_id: Optional[int] = None,
+    ) -> _get_version_info_ret:
+        ...
 
     def set_restart(
-            self, *,
-            delay: int = 0,
-            self_id: Optional[int] = None,
-    ) -> None: ...
+        self,
+        *,
+        delay: int = 0,
+        self_id: Optional[int] = None,
+    ) -> None:
+        ...
 
     def clean_cache(
-            self, *,
-            self_id: Optional[int] = None,
-    ) -> None: ...
+        self,
+        *,
+        self_id: Optional[int] = None,
+    ) -> None:
+        ...

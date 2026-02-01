@@ -19,8 +19,8 @@ except ImportError:
 from quart import Quart, request, abort, jsonify, websocket, Response
 
 from .api import AsyncApi, SyncApi
-from .api_impl import (SyncWrapperApi, HttpApi, WebSocketReverseApi,
-                       UnifiedApi, ResultStore, WebSocketForwardApi, _is_websocket_url)
+from .api_impl import (SyncWrapperApi, HttpApi, WebSocketReverseApi, UnifiedApi,
+                       ResultStore, WebSocketForwardApi, _is_websocket_url)
 from .bus import EventBus
 from .exceptions import Error, TimingError
 from .event import Event
@@ -105,8 +105,10 @@ class CQHttp(AsyncApi):
         ``import_name`` 参数为当前模块（使用 `CQHttp` 的模块）的导入名，通常传入
         ``__name__`` 或不传入。
 
-        ``api_root`` 参数为 OneBot API 的 URL，``access_token`` 和
-        ``secret`` 参数为 OneBot 配置中填写的对应项。
+        ``api_root`` 参数为 OneBot API 的地址，支持 HTTP URL（如
+        ``http://127.0.0.1:5700``）或正向 WebSocket URL（如
+        ``ws://127.0.0.1:6700/``）。``access_token`` 和 ``secret`` 参数为 OneBot
+        配置中填写的对应项。
 
         ``message_class`` 参数为要用来对 `Event.message` 进行转换的消息类，可使用
         `Message`，例如：
@@ -163,12 +165,10 @@ class CQHttp(AsyncApi):
         if _is_websocket_url(api_root):
             # Forward WebSocket mode
             try:
-                wsf_api = WebSocketForwardApi(
-                    ws_url=api_root,
-                    access_token=access_token,
-                    timeout_sec=api_timeout_sec,
-                    event_handler=self._handle_event
-                )
+                wsf_api = WebSocketForwardApi(ws_url=api_root,
+                                              access_token=access_token,
+                                              timeout_sec=api_timeout_sec,
+                                              event_handler=self._handle_event)
             except ImportError as e:
                 self.logger.error(f"Failed to create WebSocketForwardApi: {e}")
                 raise
@@ -180,8 +180,7 @@ class CQHttp(AsyncApi):
         self._wsr_api_clients = {}  # connected wsr api clients
         self._wsr_event_clients = set()
         wsr_api = WebSocketReverseApi(self._wsr_api_clients,
-                                      self._wsr_event_clients,
-                                      api_timeout_sec)
+                                      self._wsr_event_clients, api_timeout_sec)
 
         # Update the existing UnifiedApi instance instead of creating a new one
         self._api._http_api = http_api

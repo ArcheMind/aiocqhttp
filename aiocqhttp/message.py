@@ -8,7 +8,6 @@ from typing import Iterable, Dict, Tuple, Any, Optional, Union
 
 from .typing import Message_T
 
-
 __pdoc__ = {}
 
 
@@ -173,6 +172,7 @@ class MessageSegment(dict):
     __pdoc__['MessageSegment.__radd__'] = True
 
     if sys.version_info >= (3, 9, 0):
+
         def __or__(self, other):
             raise NotImplementedError
 
@@ -205,12 +205,12 @@ class MessageSegment(dict):
         # NOTE: destruct parameter is not part of the onebot v11 std.
         return MessageSegment(type_='image',
                               data=_remove_optional({
-                                      'file': file,
-                                      'type': _optionally_strfy(type),
-                                      'cache': _optionally_strfy(cache),
-                                      'proxy': _optionally_strfy(proxy),
-                                      'timeout': _optionally_strfy(timeout),
-                                      'destruct': _optionally_strfy(destruct),
+                                  'file': file,
+                                  'type': _optionally_strfy(type),
+                                  'cache': _optionally_strfy(cache),
+                                  'proxy': _optionally_strfy(proxy),
+                                  'timeout': _optionally_strfy(timeout),
+                                  'destruct': _optionally_strfy(destruct),
                               }))
 
     @staticmethod
@@ -268,8 +268,8 @@ class MessageSegment(dict):
         """戳一戳。"""
         return MessageSegment(type_='poke',
                               data={
-                                'type': type_,
-                                'id': str(id_),
+                                  'type': type_,
+                                  'id': str(id_),
                               })
 
     @staticmethod
@@ -372,17 +372,17 @@ class MessageSegment(dict):
         return MessageSegment(type_='node', data={'id': str(id_)})
 
     @staticmethod
-    def node_custom(user_id: int,
-                    nickname: str,
+    def node_custom(user_id: int, nickname: str,
                     content: Message_T) -> 'MessageSegment':
         """合并转发自定义节点。"""
         if not isinstance(content, (str, MessageSegment, Message)):
             content = Message(content)
-        return MessageSegment(type_='node', data={
-            'user_id': str(user_id),
-            'nickname': nickname,
-            'content': str(content),
-        })
+        return MessageSegment(type_='node',
+                              data={
+                                  'user_id': str(user_id),
+                                  'nickname': nickname,
+                                  'content': str(content),
+                              })
 
     @staticmethod
     def xml(data: str) -> 'MessageSegment':
