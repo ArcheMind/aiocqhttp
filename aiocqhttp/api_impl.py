@@ -211,7 +211,7 @@ class UnifiedApi(AsyncApi):
 
 def _is_websocket_url(url: str) -> bool:
     """判断 ``url`` 是否为 WebSocket URL。"""
-    return url and (url.startswith('ws://') or url.startswith('wss://'))
+    return url.startswith(('ws://', 'wss://'))
 
 
 class WebSocketForwardApi(AsyncApi):
